@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curse of Aros - Calculator</title>
+    <meta name="description" content="Curse of Aros - Calculator: Calculate XP, ores, and progress efficiently for various skills like Mining, Smithing, and more.">
+    <meta name="keywords" content="Curse of Aros, Calculator, Mining XP, Smithing XP, Skills, Progress Calculator">
+    <meta name="author" content="OxiniX">
+    <link rel="icon" href="https://www.curseofaros.com/img/logo.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: white;
+        }
+        header {
+            background-color: #222;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            border-bottom: 1px solid #555;
+        }
+        @media (min-width: 768px) {
+            header {
+                font-size: 32px;
+            }
+        }
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            border-bottom: 1px solid #555;
+            margin-bottom: 25px;
+        }
+        .menu-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .menu-tabs a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #555;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .menu-tabs a:hover {
+            background-color: #666;
+        }
+        h1 {
+            text-align: center;
+            margin: 60px 0 20px 0;
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: #fafafa;
+            color: black;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #888;
+            box-sizing: border-box;
+        }
+        input[type="number"] {
+            width: 100%;
+        }
+        input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: nowrap;
+        }
+        .row > div {
+            display: flex;
+            flex-direction: column;
+        }
+        .level-field {
+            flex: 1;
+        }
+        .progress-field {
+            flex: 0.3;
+            position: relative;
+        }
+        .progress-field input {
+            padding-right: 40px;
+            text-align: right;
+        }
+        .progress-field::after {
+            content: "%";
+            position: absolute;
+            right: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: black;
+        }
+        .target-container {
+            margin-top: 20px;
+        }
+        .select-ores {
+            margin-top: 20px;
+        }
+        .select-ores select {
+            width: 100%;
+        }
+        .xp-boost {
+            margin-top: 20px;
+        }
+        .xp-boost-label {
+            margin-bottom: 10px;
+        }
+        .xp-boost-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+        .xp-boost-options label {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        button {
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        .output {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: black;
+        }
+        .output p {
+            margin: 3px 0;
+        }
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .menu-tabs {
+                gap: 10px;
+                justify-content: flex-start;
+            }
+            .menu-tabs a {
+                flex-shrink: 0;
+                margin: 0 5px;
+            }
+            .container {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>Curse of Aros - Calculator</header>
+    <nav class="menu-tabs">
+        <a href="/">Home</a>
+        <a href="/mining">Mining</a>
+        <a href="/smithing">Smithing</a>
+        <a href="/woodcutting">Woodcutting</a>
+        <a href="/crafting">Crafting</a>
+        <a href="/fishing">Fishing</a>
+        <a href="/cooking">Cooking</a>
+        <a href="/spellbinding">Spellbinding</a>
+    </nav>
+    <h1>Mining XP Calculator</h1>
+    <div class="container">
+        <div class="row">
+            <div class="level-field">
+                <label for="level">Current Level</label>
+                <input type="number" id="level" name="current-level" placeholder="Enter your mining level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="target-level">Target Level</label>
+            <input type="number" id="target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-ores">
+            <label for="ore">Select Ore</label>
+            <select id="ore" name="selected-ore" disabled>
+                <option value="" disabled selected>Select Ore - First enter your current level</option>
+            </select>
+        </div>
+        <div class="xp-boost">
+            <label class="xp-boost-label">XP Boost</label>
+            <div class="xp-boost-options">
+                <label>
+                    <input type="checkbox" id="tier1to3" onchange="handleCheckbox('tier1to3')">
+                    Full Tier 1-3 (+5%)
+                </label>
+                <label>
+                    <input type="checkbox" id="tier4" onchange="handleCheckbox('tier4')">
+                    Full Tier 4 (+12%)
+                </label>
+                <label>
+                    <input type="checkbox" id="worldBoost">
+                    World Boost (+50%)
+                </label>
+            </div>
+        </div>
+        <button onclick="calculateOres()">Calculate</button>
+        <div class="output" id="output">
+            <p id="xp-needed"></p>
+            <p id="ores-needed"></p>
+            <p id="default-ore-xp"></p>
+            <p id="boosted-ore-xp"></p>
+            <p id="inventories-needed"></p>
+        </div>
+    </div>
+    <footer>Made by OxiniX</footer>
+<script>
+    const xpTable = [
+        0, 46, 99, 159, 229, 309, 401, 507, 628, 768, 928, 1112, 1324, 1567, 1847, 2168,
+        2537, 2961, 3448, 4008, 4651, 5389, 6237, 7212, 8332, 9618, 11095, 12792, 14742,
+        16982, 19555, 22510, 25905, 29805, 34285, 39431, 45342, 52132, 59932, 68892,
+        79184, 91006, 104586, 120186, 138106, 158690, 182335, 209496, 240696, 276536,
+        317705, 364996, 419319, 481720, 553400, 635738, 730320, 838966, 963768, 1107128,
+        1271805, 1460969, 1678262, 1927866, 2214586, 2543940, 2922269, 3356855, 3856063,
+        4429503, 5088212, 5844870, 6714042, 7712459, 8859339, 10176758, 11690075, 13428420,
+        15425254, 17719014, 20353852, 23380486, 26857176, 30850844, 35438364, 40708040,
+        46761308, 53714688, 61702024, 70877064, 81416417, 93522954, 107429714, 123404386,
+        141754466, 162833172, 187046247, 214859767, 246809111, 283509271, 325666684,
+        374092835, 429719875, 493618564, 567018884, 651333710, 748186012, 859440093,
+        987237472, 1134038112, 1302667765, 1496372370, 1718880532, 1974475291, 2268076571,
+        2605335878, 2992745089, 3437761413, 3948950932, 4536153492
+    ];
+
+    const ores = [
+        { level: 1, ore: "Tin/Copper Ore", xp: 10 },
+        { level: 10, ore: "Iron Ore", xp: 50 },
+        { level: 15, ore: "Salt", xp: 80 },
+        { level: 20, ore: "Coal", xp: 115 },
+        { level: 25, ore: "Silver Ore", xp: 135 },
+        { level: 30, ore: "Crimsteel Ore", xp: 350 },
+        { level: 40, ore: "Gold Ore", xp: 400 },
+        { level: 45, ore: "Pink Salt", xp: 500 },
+        { level: 50, ore: "Mythan Ore", xp: 650 },
+        { level: 55, ore: "Sandstone", xp: 1100 },
+        { level: 60, ore: "Cobalt Ore", xp: 1200 },
+        { level: 70, ore: "Varaxium", xp: 1800 },
+        { level: 75, ore: "Black Salt", xp: 2500 },
+        { level: 80, ore: "Magic Ore", xp: 3200 },
+        { level: 85, ore: "Naturite", xp: 7500 }
+    ];
+
+    function formatNumberWithDots(number) {
+        return number.toLocaleString("de-DE");
+    }
+
+    function calculateOres() {
+        const level = parseInt(document.getElementById("level").value);
+        const percentage = parseFloat(document.getElementById("percentage").value);
+        const targetLevel = parseInt(document.getElementById("target-level").value);
+        const oreXP = parseInt(document.getElementById("ore").value);
+        const oreName = getSelectedOreName();
+
+        if (!level || !targetLevel || !oreXP) {
+            alert("Please complete all fields.");
+            return;
+        }
+
+        if (level >= targetLevel) {
+            alert("Target level must be higher than current level.");
+            return;
+        }
+
+        const currentXP = Math.round(
+            xpTable[level - 1] + ((xpTable[level] - xpTable[level - 1]) * (percentage / 100))
+        );
+        const targetXP = Math.round(xpTable[targetLevel - 1]);
+        const xpNeeded = targetXP - currentXP;
+
+        const boostPercentage = getBoostPercentage();
+        const boostedXP = Math.round(oreXP + (oreXP * (boostPercentage / 100)));
+        const oresNeeded = Math.ceil(xpNeeded / boostedXP);
+        const inventoriesNeeded = Math.ceil(oresNeeded / 36);
+
+        document.getElementById("output").style.display = "block";
+        document.getElementById("xp-needed").innerHTML = `<strong>Total XP to next level:</strong> ${formatNumberWithDots(xpNeeded)}`;
+        document.getElementById("ores-needed").innerHTML = `<strong>Total ${oreName}'s needed:</strong> ${formatNumberWithDots(oresNeeded)}`;
+        document.getElementById("default-ore-xp").innerHTML = `<strong>Default ${oreName} XP:</strong> ${formatNumberWithDots(oreXP)}`;
+        document.getElementById("boosted-ore-xp").innerHTML = `<strong>Boosted ${oreName} XP:</strong> ${formatNumberWithDots(boostedXP)}`;
+        document.getElementById("inventories-needed").innerHTML = `<strong>Inventories needed:</strong> ${formatNumberWithDots(inventoriesNeeded)} (36 per inventory)`;
+    }
+
+    function getSelectedOreName() {
+        const oreSelect = document.getElementById("ore");
+        const selectedIndex = oreSelect.selectedIndex;
+        if (selectedIndex > 0) {
+            return oreSelect.options[selectedIndex].text.split(" - ")[1];
+        }
+        return "";
+    }
+
+    function handleCheckbox(checkboxId) {
+        if (checkboxId === 'tier1to3') {
+            document.getElementById('tier4').checked = false;
+        } else if (checkboxId === 'tier4') {
+            document.getElementById('tier1to3').checked = false;
+        }
+    }
+
+    function getBoostPercentage() {
+        const tier1to3 = document.getElementById("tier1to3").checked ? 5 : 0;
+        const tier4 = document.getElementById("tier4").checked ? 12 : 0;
+        const worldBoost = document.getElementById("worldBoost").checked ? 50 : 0;
+        return tier1to3 + tier4 + worldBoost;
+    }
+
+    function updateOreSelection(level) {
+        const oreSelect = document.getElementById("ore");
+        oreSelect.innerHTML = `<option value="" disabled selected>Select Ore</option>`;
+        ores.forEach(ore => {
+            const option = document.createElement("option");
+            option.value = ore.xp;
+            option.textContent = `Lvl ${ore.level} - ${ore.ore} - (${ore.xp} XP/Per)`;
+            option.disabled = level < ore.level;
+            oreSelect.appendChild(option);
+        });
+
+        oreSelect.disabled = !level;
+    }
+
+    document.getElementById("level").addEventListener("input", () => {
+        const level = parseInt(document.getElementById("level").value) || 0;
+        updateOreSelection(level);
+    });
+</script>
+
+</body>
+</html>
