@@ -1,0 +1,277 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: white;
+}
+
+header {
+    background-color: #222;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    border-bottom: 1px solid #555;
+}
+
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0;
+    border-bottom: 1px solid #555;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.menu-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-tabs a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #555;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.15s ease;
+}
+
+.menu-tabs a:hover {
+    background-color: #666;
+}
+
+.menu-tabs a:active,
+.menu-tabs a.active {
+    background-color: #777;
+}
+
+h1 {
+    text-align: center;
+    margin: 60px 0 20px 0;
+    color: white;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fafafa;
+    color: black;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input,
+select,
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    box-sizing: border-box;
+}
+
+input[type="number"] {
+    width: 100%;
+}
+
+input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+.row > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.level-field {
+    flex: 1;
+}
+
+.progress-field {
+    flex: 0.3;
+    position: relative;
+}
+
+.progress-field input {
+    padding-right: 40px;
+    text-align: right;
+}
+
+.progress-field::after {
+    content: "%";
+    position: absolute;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: black;
+}
+
+.target-container {
+    margin-top: 20px;
+}
+
+.select-ores,
+.select-food,
+.select-logs,
+.select-relics,
+.select-items,
+.select-bars,
+.select-gear,
+.select-fish {
+    margin-top: 20px;
+}
+
+.select-ores select,
+.select-food select,
+.select-logs select,
+.select-relics select,
+.select-items select,
+.select-bars select,
+.select-gear select,
+.select-fish select {
+    width: 100%;
+}
+
+.xp-boost {
+    margin-top: 20px;
+}
+
+.xp-boost-label {
+    margin-bottom: 10px;
+}
+
+.xp-boost-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.xp-boost-options label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.xp-boost-options-smith {
+    display: flex;
+    justify-content: center;
+    gap: 5%; /* Adjust the spacing between the checkboxes as needed */
+    align-items: center;
+    text-align: center;
+}
+
+.xp-boost-options-smith label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button {
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+.output {
+    display: none;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+}
+
+.output p {
+    margin: 3px 0;
+}
+
+footer {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin: 20px 0;
+	padding-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .menu-tabs {
+        gap: 10px;
+        justify-content: flex-start;
+    }
+
+    .menu-tabs a {
+        flex-shrink: 0;
+        margin: 0 5px;
+    }
+
+    .container {
+        margin: 0 10px;
+    }
+}
+
+.error-border {
+    border: 2px solid red;
+}
+
+.discord-logo {
+    width: 80px;
+    height: 80px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.discord-logo:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px #7289da);
+}
+
+footer a {
+    color: inherit; 
+    text-decoration: underline; 
+}
+
+footer a:hover {
+    text-decoration: none;
+}
+
+footer p + a {
+    display: block;
+    margin-top: 5px;
+}

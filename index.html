@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curse of Aros - Skills Calculator</title>
+    <meta name="description" content="Curse of Aros - Skills Calculator: Efficiently calculate XP, ores, and boosts for skills like Mining, Fishing, Cooking, Woodcutting, Crafting, and Spellbinding.">
+    <meta name="keywords" content="Curse of Aros Calculator, COA Calculator, Curse of Aros Skills, Mining XP Calculator, Fishing XP Calculator, Cooking XP Calculator, Woodcutting XP Calculator, Crafting XP Calculator, Spellbinding XP Calculator">
+    <meta name="author" content="OxiniX">
+    <link rel="icon" href="https://www.curseofaros.com/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="/COA-Calculator/style.css">
+    <script src="/COA-Calculator/scripts/common.js" defer></script>
+    <script src="/COA-Calculator/scripts/mining.js" defer></script>
+    <script src="/COA-Calculator/scripts/fishing.js" defer></script>
+    <script src="/COA-Calculator/scripts/cooking.js" defer></script>
+    <script src="/COA-Calculator/scripts/woodcutting.js" defer></script>
+    <script src="/COA-Calculator/scripts/crafting.js" defer></script>
+    <script src="/COA-Calculator/scripts/spellbinding.js" defer></script>
+    <script src="/COA-Calculator/scripts/smithing.js" defer></script>
+</head>
+<body>
+    <header>Curse of Aros - Skills Calculator</header>
+    <nav class="menu-tabs">
+        <a href="#" id="home-tab" onclick="showContainer('home')">Home</a>
+        <a href="#" id="mining-tab" onclick="showContainer('mining')">Mining</a>
+		<a href="#" id="smithing-tab" onclick="showContainer('smithing')">Smithing</a>
+        <a href="#" id="woodcutting-tab" onclick="showContainer('woodcutting')">Woodcutting</a>
+        <a href="#" id="crafting-tab" onclick="showContainer('crafting')">Crafting</a>
+        <a href="#" id="fishing-tab" onclick="showContainer('fishing')">Fishing</a>
+        <a href="#" id="cooking-tab" onclick="showContainer('cooking')">Cooking</a>
+        <a href="#" id="spellbinding-tab" onclick="showContainer('spellbinding')">Spellbinding</a>
+    </nav>
+    <h1 id="page-title">Welcome to Curse of Aros Skills Calculator</h1>
+    <div class="container" id="home">
+		<div class="welcome-text">
+			<p>
+				<strong>Welcome to Curse of Aros - Skills Calculator</strong><br>			
+				Welcome to the ultimate resource for planning and optimizing your skill progression in Curse of Aros! Our skills calculator is designed with a user-friendly interface and detailed information to help you achieve your in-game goals efficiently and effectively.
+			</p>
+			<p>
+				Here, you can calculate experience requirements, track skill progression, and explore boost percentages for various skills like Smithing, Cooking, Fishing, and more. Whether you're a beginner starting your journey or an advanced player mastering your skills, this calculator has everything you need to strategize and succeed.
+			</p>
+			<p>
+				With its detailed breakdowns, including material requirements and boosted XP options, this tool ensures you’re always prepared to tackle your next level. From crafting the perfect gear to forging powerful items, you can trust this calculator to guide you step-by-step.
+			</p>
+			<p>
+				<strong>Have suggestions or encountered a bug?</strong><br>
+				Join our Discord community and let us know! We value your feedback and continuously strive to improve this tool for players like you. Your insights help us enhance the calculator, making it even more efficient and reliable for everyone in the Curse of Aros community.
+			</p>
+			<p>
+				Dive in and start planning your skill progression today! Explore each tab to find calculators tailored to specific skills, designed to provide clear outputs and actionable insights.
+			</p>
+			<p>
+				Together, let’s make your Curse of Aros journey an unforgettable adventure. Happy gaming, and may your skills level up faster than ever!
+			</p>
+			<div style="text-align: center;">
+				<a href="https://discord.gg/3sUMPBeRVM" target="_blank" style="text-decoration: none;">
+					<img 
+						src="https://static.vecteezy.com/system/resources/thumbnails/018/930/718/small/discord-logo-discord-icon-transparent-free-png.png" alt="Join us on Discord" class="discord-logo">
+				</a>
+			</div>
+		</div>
+    </div>
+
+    <!-- Mining Section -->
+    <div class="container" id="mining" style="display: none;">
+        <div class="row">
+            <div class="level-field">
+                <label for="mining-level">Current Level</label>
+                <input type="number" id="mining-level" name="current-level" placeholder="Enter your mining level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="mining-percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="mining-target-level">Target Level</label>
+            <input type="number" id="mining-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-ores">
+            <label for="mining-ore">Select Ore</label>
+            <select id="mining-ore" name="selected-ore" disabled>
+                <option value="" disabled selected>Select Ore - First enter your current level</option>
+            </select>
+        </div>
+			<div class="xp-boost">
+				<label class="xp-boost-label">XP Boost</label>
+				<div class="xp-boost-options">
+					<label>
+						<input type="checkbox" id="mining-tier1to3" onchange="handleMiningCheckbox('mining-tier1to3')">
+						Full Tier 1-3 (+6%)
+					</label>
+					<label>
+						<input type="checkbox" id="mining-tier4" onchange="handleMiningCheckbox('mining-tier4')">
+						Full Tier 4 (+12%)
+					</label>
+					<label>
+						<input type="checkbox" id="mining-worldBoost">
+						World Boost (+50%)
+					</label>
+				</div>
+				<div class="xp-boost-options" style="margin-top: 10px;">
+					<label>
+						<input type="checkbox" id="mining-prospectorsNecklace">
+						Prospector's Necklace (+4%)
+					</label>
+				</div>
+			</div>
+        <button onclick="calculateOres()">Calculate</button>
+        <div class="output" id="mining-output">
+            <p id="mining-current-xp"></p>
+            <p id="mining-target-xp"></p>
+            <p id="mining-xp-needed"></p>
+            <p id="mining-ores-needed"></p>
+            <p id="mining-default-ore-xp"></p>
+            <p id="mining-boosted-ore-xp" style="display: none;"></p>
+            <p id="mining-xp-per-inventory"></p>
+            <p id="mining-inventories-needed"></p>
+        </div>
+    </div>
+
+    <!-- Fishing Section -->
+    <div class="container" id="fishing" style="display: none;">
+        <div class="row">
+            <div class="level-field">
+                <label for="fishing-level">Current Level</label>
+                <input type="number" id="fishing-level" name="current-level" placeholder="Enter your fishing level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="fishing-percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="fishing-target-level">Target Level</label>
+            <input type="number" id="fishing-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-fish">
+            <label for="fish">Select Fish</label>
+            <select id="fish" name="selected-fish" disabled>
+                <option value="" disabled selected>Select Fish - First enter your current level</option>
+            </select>
+        </div>
+        <div class="xp-boost">
+            <label class="xp-boost-label">XP Boost</label>
+            <div class="xp-boost-options">
+                <label>
+                    <input type="checkbox" id="fishing-tier1to3" onchange="handleFishingCheckbox('fishing-tier1to3')">
+                    Full Tier 1-3 (+6%)
+                </label>
+                <label>
+                    <input type="checkbox" id="fishing-tier4" onchange="handleFishingCheckbox('fishing-tier4')">
+                    Full Tier 4 (+12%)
+                </label>
+                <label>
+                    <input type="checkbox" id="fishing-worldBoost">
+                    World Boost (+50%)
+                </label>
+            </div>
+        </div>
+        <button onclick="calculateFish()">Calculate</button>
+        <div class="output" id="fishing-output">
+            <p id="fishing-current-xp"></p>
+            <p id="fishing-target-xp"></p>
+            <p id="fishing-xp-needed"></p>
+            <p id="fishing-fish-needed"></p>
+            <p id="fishing-default-fish-xp"></p>
+            <p id="fishing-boosted-fish-xp" style="display: none;"></p>
+            <p id="fishing-xp-per-inventory"></p>
+            <p id="fishing-inventories-needed"></p>
+        </div>
+    </div>
+
+    <!-- Cooking Section -->
+    <div class="container" id="cooking" style="display: none;">
+        <div class="row">
+            <div class="level-field">
+                <label for="cooking-level">Current Level</label>
+                <input type="number" id="cooking-level" name="current-level" placeholder="Enter your cooking level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="cooking-percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="cooking-target-level">Target Level</label>
+            <input type="number" id="cooking-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-food">
+            <label for="cooking-food">Select Food</label>
+            <select id="cooking-food" name="selected-food" disabled>
+                <option value="" disabled selected>Select Food - First enter your current level</option>
+            </select>
+        </div>
+        <div class="xp-boost">
+            <label class="xp-boost-label">XP Boost</label>
+            <div class="xp-boost-options">
+                <label>
+                    <input type="checkbox" id="cooking-tier1to3" onchange="handleCookingCheckbox('cooking-tier1to3')">
+                    Full Tier 1-3 (+6%)
+                </label>
+                <label>
+                    <input type="checkbox" id="cooking-tier4" onchange="handleCookingCheckbox('cooking-tier4')">
+                    Full Tier 4 (+12%)
+                </label>
+                <label>
+                    <input type="checkbox" id="cooking-worldBoost">
+                    World Boost (+50%)
+                </label>
+            </div>
+        </div>
+        <button onclick="calculateCooking()">Calculate</button>
+        <div class="output" id="cooking-output">
+            <p id="cooking-current-xp"></p>
+            <p id="cooking-target-xp"></p>
+            <p id="cooking-xp-needed"></p>
+            <p id="cooking-food-needed"></p>
+            <p id="cooking-default-food-xp"></p>
+            <p id="cooking-boosted-food-xp" style="display: none;"></p>
+            <p id="cooking-xp-per-inventory"></p>
+            <p id="cooking-inventories-needed"></p>
+        </div>
+    </div>
+
+    <!-- Woodcutting Section -->
+    <div class="container" id="woodcutting" style="display: none;">
+        <div class="row">
+            <div class="level-field">
+                <label for="woodcutting-level">Current Level</label>
+                <input type="number" id="woodcutting-level" name="current-level" placeholder="Enter your woodcutting level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="woodcutting-percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="woodcutting-target-level">Target Level</label>
+            <input type="number" id="woodcutting-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-logs">
+            <label for="woodcutting-logs">Select Logs</label>
+            <select id="woodcutting-logs" name="selected-logs" disabled>
+                <option value="" disabled selected>Select Logs - First enter your current level</option>
+            </select>
+        </div>
+        <div class="xp-boost">
+            <label class="xp-boost-label">XP Boost</label>
+            <div class="xp-boost-options">
+                <label>
+                    <input type="checkbox" id="woodcutting-tier1to3" onchange="handleWoodcuttingCheckbox('woodcutting-tier1to3')">
+                    Full Tier 1-3 (+6%)
+                </label>
+                <label>
+                    <input type="checkbox" id="woodcutting-tier4" onchange="handleWoodcuttingCheckbox('woodcutting-tier4')">
+                    Full Tier 4 (+12%)
+                </label>
+                <label>
+                    <input type="checkbox" id="woodcutting-worldBoost">
+                    World Boost (+50%)
+                </label>
+            </div>
+        </div>
+        <button onclick="calculateWoodcutting()">Calculate</button>
+        <div class="output" id="woodcutting-output">
+            <p id="woodcutting-current-xp"></p>
+            <p id="woodcutting-target-xp"></p>
+            <p id="woodcutting-xp-needed"></p>
+            <p id="woodcutting-logs-needed"></p>
+            <p id="woodcutting-default-logs-xp"></p>
+            <p id="woodcutting-boosted-logs-xp" style="display: none;"></p>
+            <p id="woodcutting-xp-per-inventory"></p>
+            <p id="woodcutting-inventories-needed"></p>
+        </div>
+    </div>
+
+    <!-- Crafting Section -->
+    <div class="container" id="crafting" style="display: none;">
+        <div class="row">
+            <div class="level-field">
+                <label for="crafting-level">Current Level</label>
+                <input type="number" id="crafting-level" name="current-level" placeholder="Enter your crafting level" min="1" max="120" required>
+            </div>
+            <div class="progress-field">
+                <input type="number" id="crafting-percentage" name="progress" min="0" max="100" value="0" required>
+            </div>
+        </div>
+        <div class="target-container">
+            <label for="crafting-target-level">Target Level</label>
+            <input type="number" id="crafting-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+        </div>
+        <div class="select-relics">
+            <label for="crafting-relics">Select Relic</label>
+            <select id="crafting-relics" name="selected-relic" disabled>
+                <option value="" disabled selected>Select Relic - First enter your current level</option>
+            </select>
+        </div>
+        <div class="xp-boost">
+            <label class="xp-boost-label">XP Boost</label>
+            <div class="xp-boost-options">
+                <label>
+                    <input type="checkbox" id="crafting-tier1to3" onchange="handleCraftingCheckbox('crafting-tier1to3')">
+                    Full Tier 1-3 (+6%)
+                </label>
+                <label>
+                    <input type="checkbox" id="crafting-tier4" onchange="handleCraftingCheckbox('crafting-tier4')">
+                    Full Tier 4 (+12%)
+                </label>
+                <label>
+                    <input type="checkbox" id="crafting-worldBoost">
+                    World Boost (+50%)
+                </label>
+            </div>
+        </div>
+        <button onclick="calculateCrafting()">Calculate</button>
+        <div class="output" id="crafting-output">
+            <p id="crafting-current-xp"></p>
+            <p id="crafting-target-xp"></p>
+            <p id="crafting-xp-needed"></p>
+            <p id="crafting-relics-needed"></p>
+            <p id="crafting-default-relic-xp"></p>
+            <p id="crafting-boosted-relic-xp" style="display: none;"></p>
+            <p id="crafting-xp-per-inventory"></p>
+            <p id="crafting-inventories-needed"></p>
+        </div>
+    </div>
+	
+	<!-- Spellbinding Section -->
+	<div class="container" id="spellbinding" style="display: none;">
+		<div class="row">
+			<div class="level-field">
+				<label for="spellbinding-level">Current Level</label>
+				<input type="number" id="spellbinding-level" name="current-level" placeholder="Enter your spellbinding level" min="1" max="120" required>
+			</div>
+			<div class="progress-field">
+				<input type="number" id="spellbinding-percentage" name="progress" min="0" max="100" value="0" required>
+			</div>
+		</div>
+		<div class="target-container">
+			<label for="spellbinding-target-level">Target Level</label>
+			<input type="number" id="spellbinding-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+		</div>
+		<div class="select-items">
+			<label for="spellbinding-tomes">Select Tome</label>
+			<select id="spellbinding-tomes" name="selected-tome" disabled>
+				<option value="" disabled selected>Select Tome - First enter your current level</option>
+			</select>
+		</div>
+		<div class="select-items">
+			<label for="spellbinding-items">Select Item</label>
+			<select id="spellbinding-items" name="selected-item" disabled>
+				<option value="" disabled selected>Select Item - First enter your current level</option>
+			</select>
+		</div>
+		<div class="xp-boost">
+			<label class="xp-boost-label">XP Boost</label>
+			<div class="xp-boost-options">
+				<label>
+					<input type="checkbox" id="spellbinding-tier1to3" onchange="handleCheckboxChange('spellbinding-tier1to3')">
+					Full Tier 1-3 (+6%)
+				</label>
+				<label>
+					<input type="checkbox" id="spellbinding-tier4" onchange="handleCheckboxChange('spellbinding-tier4')">
+					Full Tier 4 (+12%)
+				</label>
+				<label>
+					<input type="checkbox" id="spellbinding-worldBoost">
+					World Boost (+50%)
+				</label>
+			</div>
+		</div>
+		<button onclick="window.calculateSpellbinding()">Calculate</button>
+		<div class="output" id="spellbinding-output" style="display: none;">
+			<p id="spellbinding-current-xp"></p>
+			<p id="spellbinding-target-xp"></p>
+			<p id="spellbinding-xp-needed"></p>
+			<p id="spellbinding-items-needed"></p>
+			<div id="spellbinding-materials" style="margin-top: 1px;">
+				<p id="spellbinding-total-books"></p>
+				<p id="spellbinding-total-relics"></p>
+				<p id="spellbinding-total-essence"></p>
+				<p id="spellbinding-total-other-materials"></p>
+			</div>
+			<p id="spellbinding-default-item-xp"></p>
+			<p id="spellbinding-boosted-item-xp" style="display: none;"></p>
+			<p id="spellbinding-xp-per-inventory"></p>
+			<p id="spellbinding-inventories-needed"></p>
+
+		</div>
+	</div>
+
+	<!-- Smithing Section -->
+	<div class="container" id="smithing" style="display: none;">
+		<div class="row">
+			<div class="level-field">
+				<label for="smithing-level">Current Level</label>
+				<input type="number" id="smithing-level" name="current-level" placeholder="Enter your smithing level" min="1" max="120" required>
+			</div>
+			<div class="progress-field">
+				<input type="number" id="smithing-percentage" name="progress" min="0" max="100" value="0" required>
+			</div>
+		</div>
+		<div class="target-container">
+			<label for="smithing-target-level">Target Level</label>
+			<input type="number" id="smithing-target-level" name="target-level" placeholder="Enter your target level" min="1" max="120" required>
+		</div>
+		<div class="select-bars">
+			<label for="smithing-bars">Select Bar</label>
+			<select id="smithing-bars" name="selected-bar" disabled>
+				<option value="" disabled selected>Select Bar - First enter your current level</option>
+			</select>
+		</div>
+		<div class="select-gear">
+			<label for="smithing-gear">Select Gear</label>
+			<select id="smithing-gear" name="selected-gear" disabled>
+				<option value="" disabled selected>Select Gear - First enter your current level</option>
+			</select>
+		</div>
+		<div class="xp-boost">
+			<label class="xp-boost-label">XP Boost</label>
+			<div class="xp-boost-options">
+				<label>
+					<input type="checkbox" id="smithing-tier1to3">
+					Full Tier 1-3 (+6%)
+				</label>
+				<label>
+					<input type="checkbox" id="smithing-tier4">
+					Full Tier 4 (+12%)
+				</label>
+				<label>
+					<input type="checkbox" id="smithing-worldBoost">
+					World Boost (+50%)
+				</label>
+			</div>
+			<div class="xp-boost-options-smith" style="margin-top: 10px;">
+				<label>
+					<input type="checkbox" id="smithing-infernalRing">
+					Infernal Ring (+4%)
+				</label>
+				<label>
+					<input type="checkbox" id="smithing-infernalHammer">
+					Infernal Hammer (+4%)
+				</label>
+			</div>
+		</div>
+		<button onclick="calculateSmithing()">Calculate</button>
+		<div class="output" id="smithing-output" style="display: none;">
+			<p id="smithing-current-xp"></p>
+			<p id="smithing-target-xp"></p>
+			<p id="smithing-xp-needed"></p>
+			<p id="smithing-items-needed"></p>
+			<p id="smithing-default-item-xp"></p>
+			<p id="smithing-boosted-item-xp" style="display: none;"></p>
+			<p id="smithing-materials-needed" style="display: none;"></p>
+		</div>
+	</div>
+
+	<footer>
+		<p>Made by OxiniX</p>
+		<p>Data from <a href="https://www.curseofaros.wiki/" target="_blank">Curse of Aros</a> wiki</p>
+	</footer>
+
+</body>
+</html>
+
