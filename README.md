@@ -8,3 +8,10 @@ Material breakdown for crafting bars and gears.
 Supports various boosts including Infernal Ring, Infernal Hammer, and tier-specific boosts.
 Responsive design for desktop and mobile.
 Links to our Discord for suggestions and bug reporting.
+
+Bugs & Suggestions
+If you encounter bugs or have suggestions, feel free to join our Discord and let us know!
+
+Credits
+Made by: OxiniX
+Data Sources: Curse of Aros Wiki
